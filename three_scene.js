@@ -81,6 +81,9 @@ window.initThreeScene = function() {
    -------------------------------------------------------------------------- */
 function loadRamenShop() {
   const loader  = new THREE.GLTFLoader();
+  const dracoLoader = new THREE.DRACOLoader();
+  dracoLoader.setDecoderPath('assets/draco/');
+  loader.setDRACOLoader(dracoLoader);
   const texLoad = new THREE.TextureLoader();
 
   function tex(file) {
