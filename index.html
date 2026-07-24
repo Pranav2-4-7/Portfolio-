@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pranav's Ramen & Code | Data Science & AI Portfolio</title>
+  <meta name="description" content="Jesse Zhou-inspired 3D WebGL Ramen Stand Portfolio of Pranav Khera - Dual Degree Undergraduate in Data Science & AI (IIT Guwahati) and B.Tech IT (GTBIT).">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍜</text></svg>">
+
+  <!-- Google Fonts & FontAwesome -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Three.js, OrbitControls, GLTFLoader, DRACOLoader & GSAP — served locally -->
+  <script src="libs/three.min.js"></script>
+  <script src="libs/OrbitControls.js"></script>
+  <script src="libs/DRACOLoader.js"></script>
+  <script src="libs/GLTFLoader.js"></script>
+  <script src="libs/gsap.min.js"></script>
+</head>
+<body>
+
+  <!-- THREE.JS WEBGL CANVAS -->
+  <canvas class="webgl"></canvas>
+
+  <!-- LOADING SCREEN (#cooking) -->
+  <div id="cooking">
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div id="area">
+      <div id="sides">
+        <div id="pan"></div>
+        <div id="handle"></div>
+      </div>
+      <div id="pancake"></div>
+    </div>
+    <h1>Cooking Your Code... <span id="progressPercentage">0</span>%</h1>
+    <button class="start" id="startBtn">START</button>
+  </div>
+
+  <!-- RETRO PIXEL-ART MODAL OVERLAY -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-window" id="modalWindow">
+      <div class="modal-header">
+        <h2 id="modalTitle">projects</h2>
+        <button class="modal-close-btn" id="modalCloseBtn">X</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Injected dynamically via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- AUDIO TOGGLE BUTTON -->
+  <button class="audio-toggle-btn" id="audioToggleBtn" title="Toggle Sound SFX">
+    <i class="fa-solid fa-volume-high"></i>
+  </button>
+
+  <script src="three_scene.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
