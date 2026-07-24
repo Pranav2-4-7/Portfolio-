@@ -141,6 +141,41 @@ const modalData = {
         <p style="font-size:.85rem;color:var(--text-muted);margin-top:.5rem;">IEEE GTBIT Student Branch Member — IEEE Day 2025, TARANG 2.0, HackTivate</p>
       </div>`
   },
+  skills: {
+    title: 'skills',
+    themeClass: 'theme-projects',
+    content: `
+      <div class="modal-card">
+        <h3 style="font-family:var(--font-pixel);font-size:.9rem;color:var(--accent-pink);margin-bottom:.5rem;">Programming Languages</h3>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;">
+          <span class="modal-tag">Python</span>
+          <span class="modal-tag">Kotlin</span>
+          <span class="modal-tag">TypeScript</span>
+          <span class="modal-tag">JavaScript</span>
+          <span class="modal-tag">C++</span>
+          <span class="modal-tag">SQL</span>
+        </div>
+        <h3 style="font-family:var(--font-pixel);font-size:.9rem;color:var(--accent-pink);margin-bottom:.5rem;">ML & Data Science</h3>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;">
+          <span class="modal-tag">XGBoost</span>
+          <span class="modal-tag">TensorFlow Lite</span>
+          <span class="modal-tag">NetworkX</span>
+          <span class="modal-tag">SHAP (XAI)</span>
+          <span class="modal-tag">Pandas / NumPy</span>
+          <span class="modal-tag">Scikit-Learn</span>
+        </div>
+        <h3 style="font-family:var(--font-pixel);font-size:.9rem;color:var(--accent-pink);margin-bottom:.5rem;">Libraries & Frameworks</h3>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+          <span class="modal-tag">Next.js</span>
+          <span class="modal-tag">React</span>
+          <span class="modal-tag">FastAPI</span>
+          <span class="modal-tag">Flask</span>
+          <span class="modal-tag">Three.js</span>
+          <span class="modal-tag">Jetpack Compose</span>
+          <span class="modal-tag">Gemini / Claude APIs</span>
+        </div>
+      </div>`
+  },
   aboutme: {
     title: 'about me',
     themeClass: 'theme-aboutme',
@@ -178,6 +213,8 @@ const modalData = {
       </div>`
   }
 };
+
+modalData.pranavs = modalData.aboutme;
 
 /* --------------------------------------------------------------------------
    3. AUDIO TOGGLE
