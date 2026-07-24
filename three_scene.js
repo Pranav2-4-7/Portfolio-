@@ -182,28 +182,8 @@ function loadRamenShop() {
   );
 }
 
-/* --------------------------------------------------------------------------
-   INVISIBLE SIGN HITBOXES — exact positions from RayCaster.js
-   -------------------------------------------------------------------------- */
 function buildSignHitBoxes() {
-  const invisible = new THREE.MeshBasicMaterial({ visible: false });
-
-  [
-    { key: 'projects',  size: [0.4, 0.6,  1.7], pos: [-4,  0.4,  -5.0]  },
-    { key: 'pranavs',   size: [0.4, 1.0,  1.0], pos: [-4, -0.4,  -4.72] },
-    { key: 'skills',    size: [0.4, 0.45, 1.5], pos: [-4, -1.25, -5.0]  },
-    { key: 'education', size: [0.4, 0.43, 1.7], pos: [-4, -1.83, -5.1]  },
-    { key: 'aboutme',   size: [0.4, 0.4,  1.4], pos: [-4, -2.3,  -5.03] },
-  ].forEach(s => {
-    const m = new THREE.Mesh(
-      new THREE.BoxGeometry(...s.size),
-      invisible.clone()
-    );
-    m.position.set(...s.pos);
-    m.userData.sectionKey = s.key;
-    scene.add(m);
-    signHitBoxes.push(m);
-  });
+  // Hitboxes are built dynamically in createCustomSigns()
 }
 
 /* --------------------------------------------------------------------------
@@ -298,18 +278,21 @@ function animate() {
    -------------------------------------------------------------------------- */
 function createCustomSigns() {
   const signs = [
-    { text: "PROJECTS",  pos: [-4.12,  0.4,  -5.0],  size: [1.7, 0.6],  textColor: "#ffffff", glowColor: "#ff0033" },
-    { text: "PRANAV'S",  pos: [-4.12, -0.4,  -4.72], size: [1.0, 1.0],  textColor: "#ffffff", glowColor: "#ff3dcb" },
-    { text: "SKILLS",    pos: [-4.12, -1.25, -5.0],  size: [1.5, 0.45], textColor: "#ffffff", glowColor: "#ff0033" },
-    { text: "EDUCATION", pos: [-4.12, -1.83, -5.1],  size: [1.7, 0.43], textColor: "#ffffff", glowColor: "#01ddff" },
-    { text: "ABOUT ME",  pos: [-4.12, -2.3,  -5.03], size: [1.4, 0.4],  textColor: "#ffffff", glowColor: "#ff5100" },
-    { text: "PRANAV'S RAMEN", pos: [-4.72, -2.72, -0.05], size: [2.5, 0.8], textColor: "#ffffff", glowColor: "#ff3dcb", isRoof: true }
+    { key: "projects",  text: "PROJECTS",  pos: [-4.12,  0.4,  -5.0],  size: [1.7, 0.6],  textColor: "#ffffff", glowColor: "#ff0033" },
+    { key: "pranavs",   text: "PRANAV'S",  pos: [-4.12, -0.4,  -4.72], size: [1.0, 1.0],  textColor: "#ffffff", glowColor: "#ff3dcb" },
+    { key: "skills",    text: "SKILLS",    pos: [-4.12, -1.25, -5.0],  size: [1.5, 0.45], textColor: "#ffffff", glowColor: "#ff0033" },
+    { key: "education", text: "EDUCATION", pos: [-4.12, -1.83, -5.1],  size: [1.7, 0.43], textColor: "#ffffff", glowColor: "#01ddff" },
+    { key: "aboutme",   text: "ABOUT ME",  pos: [-4.12, -2.3,  -5.03], size: [1.4, 0.4],  textColor: "#ffffff", glowColor: "#ff5100" },
+    { key: "roof",      text: "PRANAV'S RAMEN", pos: [-4.72, 0.28, -0.05], size: [2.5, 0.8], textColor: "#ffffff", glowColor: "#ff3dcb", isRoof: true }
   ];
+
+  // Clear any existing hitboxes to prevent duplicates
+  signHitBoxes = [];
 
   signs.forEach(s => {
     const w = s.isRoof ? 1024 : 512;
     const h = s.isRoof ? 256 : 128;
-    const texture = createTextTexture(s.text, s.textColor, s.glowColor, w, h);
+    const texture = createTextTexture(s.text, s.textColor, s.glowColor, w, h, s.isRoof);
     
     const mat = new THREE.MeshBasicMaterial({
       map: texture,
@@ -321,27 +304,39 @@ function createCustomSigns() {
     const mesh = new THREE.Mesh(geo, mat);
     mesh.position.set(...s.pos);
     mesh.rotation.y = -Math.PI / 2;
+    mesh.userData.sectionKey = s.key;
     scene.add(mesh);
+    
+    // Add to interactive raycasting array if it's a post sign
+    if (!s.isRoof) {
+      signHitBoxes.push(mesh);
+    }
   });
 }
 
-function createTextTexture(text, textColor, glowColor, width = 512, height = 128) {
+function createTextTexture(text, textColor, glowColor, width = 512, height = 128, isRoof = false) {
   const canvas = document.createElement('canvas');
   canvas.width = width;
   canvas.height = height;
   const ctx = canvas.getContext('2d');
   
-  ctx.clearRect(0, 0, width, height);
+  if (isRoof) {
+    // Solid background to block the underlying original neon text
+    ctx.fillStyle = "#0c0d14";
+    ctx.fillRect(0, 0, width, height);
+  } else {
+    ctx.clearRect(0, 0, width, height);
+  }
   
   // Retro Pixel Font
-  ctx.font = 'bold 44px "Press Start 2P", Courier, monospace';
+  ctx.font = isRoof ? 'bold 50px "Press Start 2P", Courier, monospace' : 'bold 44px "Press Start 2P", Courier, monospace';
   ctx.fillStyle = textColor;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   
   // Neon glow effect
   ctx.shadowColor = glowColor;
-  ctx.shadowBlur = 12;
+  ctx.shadowBlur = 15;
   ctx.shadowOffsetX = 0;
   ctx.shadowOffsetY = 0;
   
