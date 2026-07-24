@@ -124,18 +124,21 @@ function loadRamenShop() {
       model.position.y = -3;
 
       model.traverse((child) => {
-        if (!child.isMesh) return;
         const n = child.name;
 
-        // Hide original text meshes to replace with custom text
-        if (n.includes('projectsRed') || n.includes('projectsWhite') ||
+        // Hide original text meshes (including groups) to replace with custom text
+        if (n && (
+            n.includes('projectsRed') || n.includes('projectsWhite') ||
             n.includes('articlesRed') || n.includes('articlesWhite') ||
             n.includes('aboutMeBlack') || n.includes('aboutMeBlue') ||
             n.includes('creditsBlack') || n.includes('creditsOrange') ||
             n.includes('jZhouBlack') || n.includes('jZhouPink') ||
-            n.includes('jesseZhouJoined')) {
+            n.includes('jesseZhouJoined')
+        )) {
           child.visible = false;
         }
+
+        if (!child.isMesh) return;
 
         // Baked groups
         if      (n === 'ramenShopJoined') child.material = baked.ramenShop;
@@ -283,7 +286,7 @@ function createCustomSigns() {
     { key: "skills",    text: "SKILLS",    pos: [-4.12, -1.25, -5.0],  size: [1.5, 0.45], textColor: "#ffffff", glowColor: "#ff0033" },
     { key: "education", text: "EDUCATION", pos: [-4.12, -1.83, -5.1],  size: [1.7, 0.43], textColor: "#ffffff", glowColor: "#01ddff" },
     { key: "aboutme",   text: "ABOUT ME",  pos: [-4.12, -2.3,  -5.03], size: [1.4, 0.4],  textColor: "#ffffff", glowColor: "#ff5100" },
-    { key: "roof",      text: "PRANAV'S RAMEN", pos: [-4.72, 0.28, -0.05], size: [2.5, 0.8], textColor: "#ffffff", glowColor: "#ff3dcb", isRoof: true }
+    { key: "roof",      text: "PRANAV'S RAMEN", pos: [-4.75, 0.72, -1.8], size: [2.5, 0.7], textColor: "#ffffff", glowColor: "#ff3dcb", isRoof: true }
   ];
 
   // Clear any existing hitboxes to prevent duplicates

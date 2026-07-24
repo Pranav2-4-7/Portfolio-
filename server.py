@@ -13,7 +13,7 @@ class NoCacheHandler(http.server.SimpleHTTPRequestHandler):
     def log_message(self, format, *args):
         print(f"[SERVER] {self.address_string()} - {format % args}")
 
-PORT = 8080
+PORT = 8085
 with socketserver.TCPServer(('', PORT), NoCacheHandler) as httpd:
     print(f"[SERVER] Serving on http://localhost:{PORT}")
     httpd.serve_forever()
