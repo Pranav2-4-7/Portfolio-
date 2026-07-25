@@ -1,0 +1,103 @@
+[3D] Loading: 9%
+[3D] Loading: 17%
+[3D] Loading: 100%
+[DEBUG CENTER]: name = graphicsJoined center = 0.37 1.82 2.24
+[DEBUG SCENE MESH]: name = graphicsJoined material = MeshStandardMaterial visible = true
+[3D Meshes] HIDING Jesse Zhou object: jesseZhouJoined
+[DEBUG CENTER]: name = floor center = -0.00 0.10 -1.19
+[DEBUG SCENE MESH]: name = floor material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = easelFrontGraphic center = -2.63 1.05 2.08
+[DEBUG SCENE MESH]: name = easelFrontGraphic material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = chinese center = -1.69 2.28 -0.92
+[DEBUG SCENE MESH]: name = chinese material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = miscJoined center = -1.09 3.71 -1.65
+[DEBUG SCENE MESH]: name = miscJoined material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = lampLights center = -1.44 2.37 -0.98
+[DEBUG SCENE MESH]: name = lampLights material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = neonPink center = -2.83 5.08 -0.82
+[DEBUG SCENE MESH]: name = neonPink material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = neonYellow center = -2.34 5.96 0.52
+[DEBUG SCENE MESH]: name = neonYellow material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = neonGreen center = -3.02 5.28 -3.46
+[DEBUG SCENE MESH]: name = neonGreen material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = storageLight center = 1.51 4.95 -1.19
+[DEBUG SCENE MESH]: name = storageLight material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = portalLight center = -0.11 5.02 -0.94
+[DEBUG SCENE MESH]: name = portalLight material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = bigScreen center = 0.69 6.82 0.53
+[DEBUG SCENE MESH]: name = bigScreen material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = smallScreen1 center = 0.77 5.12 1.30
+[DEBUG SCENE MESH]: name = smallScreen1 material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = smallScreen2 center = -0.34 5.12 1.30
+[DEBUG SCENE MESH]: name = smallScreen2 material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = smallScreen3 center = -1.44 5.12 1.30
+[DEBUG SCENE MESH]: name = smallScreen3 material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = smallScreen4 center = -1.46 6.08 1.34
+[DEBUG SCENE MESH]: name = smallScreen4 material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = tallScreen center = -1.49 7.31 1.38
+[DEBUG SCENE MESH]: name = tallScreen material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = smallScreen5 center = -1.51 8.56 1.42
+[DEBUG SCENE MESH]: name = smallScreen5 material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = sideScreen center = 0.07 4.07 1.69
+[DEBUG SCENE MESH]: name = sideScreen material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = tvScreen center = -1.61 6.29 -2.03
+[DEBUG SCENE MESH]: name = tvScreen material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = littleTVScreen center = -1.85 5.29 -2.38
+[DEBUG SCENE MESH]: name = littleTVScreen material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = blueLights center = -4.08 5.07 -5.26
+[DEBUG SCENE MESH]: name = blueLights material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = redLED center = -4.14 3.87 -5.23
+[DEBUG SCENE MESH]: name = redLED material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = whiteButton center = -4.13 3.44 -5.05
+[DEBUG SCENE MESH]: name = whiteButton material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = yellowRightLight center = -4.06 3.97 -4.67
+[DEBUG SCENE MESH]: name = yellowRightLight material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = creditsOrange center = -4.13 0.73 -5.02
+[DEBUG SCENE MESH]: name = creditsOrange material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = greenLED center = -4.14 3.81 -4.87
+[DEBUG SCENE MESH]: name = greenLED material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = greenSignSquare center = -4.14 2.45 -5.33
+[DEBUG SCENE MESH]: name = greenSignSquare material = MeshStandardMaterial visible = true
+[3D Meshes] HIDING Jesse Zhou object: jZhouPink
+[DEBUG CENTER]: name = poleLight center = -4.00 4.62 -5.05
+[DEBUG SCENE MESH]: name = poleLight material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = projectsRed center = -4.13 3.40 -4.99
+[DEBUG SCENE MESH]: name = projectsRed material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = aboutMeBlack center = -4.13 1.16 -5.14
+[DEBUG SCENE MESH]: name = aboutMeBlack material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = aboutMeBlue center = -4.13 1.17 -5.12
+[DEBUG SCENE MESH]: name = aboutMeBlue material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = articlesWhite center = -4.12 1.76 -5.14
+[DEBUG SCENE MESH]: name = articlesWhite material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = articlesRed center = -4.12 1.77 -4.99
+[DEBUG SCENE MESH]: name = articlesRed material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = creditsBlack center = -4.13 0.73 -5.17
+[DEBUG SCENE MESH]: name = creditsBlack material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = projectsWhite center = -4.13 3.38 -5.20
+[DEBUG SCENE MESH]: name = projectsWhite material = MeshStandardMaterial visible = true
+[3D Meshes] HIDING Jesse Zhou object: jZhouBlack
+[DEBUG CENTER]: name = vendingMachineScreen center = 1.14 1.90 2.85
+[DEBUG SCENE MESH]: name = vendingMachineScreen material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = vendingMachineLight center = 1.14 0.53 2.31
+[DEBUG SCENE MESH]: name = vendingMachineLight material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = arcadeRim center = -0.57 1.50 2.24
+[DEBUG SCENE MESH]: name = arcadeRim material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = arcadeToken center = -0.53 0.71 2.62
+[DEBUG SCENE MESH]: name = arcadeToken material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = arcadeScreen center = -0.57 1.97 2.53
+[DEBUG SCENE MESH]: name = arcadeScreen material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = neonBlue center = -2.86 5.15 -1.19
+[DEBUG SCENE MESH]: name = neonBlue material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = dishStand center = 1.81 4.75 1.11
+[DEBUG SCENE MESH]: name = dishStand material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = dish center = 2.15 5.45 1.36
+[DEBUG SCENE MESH]: name = dish material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = fan2 center = 0.32 3.75 -3.56
+[DEBUG SCENE MESH]: name = fan2 material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = fan1 center = 1.51 3.75 -3.56
+[DEBUG SCENE MESH]: name = fan1 material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = machinesJoined center = 0.14 5.06 -1.13
+[DEBUG SCENE MESH]: name = machinesJoined material = MeshStandardMaterial visible = true
+[DEBUG CENTER]: name = ramenShopJoined center = -0.78 3.59 -1.02
+[DEBUG SCENE MESH]: name = ramenShopJoined material = MeshStandardMaterial visible = true
+[3D] ramenShop.gltf loaded ✓

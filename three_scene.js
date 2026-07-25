@@ -4,6 +4,20 @@
    Camera positions ported directly from original Camera.js.
    ========================================================================== */
 
+const originalLog = console.log;
+const logBuffer = [];
+console.log = function(...args) {
+  originalLog.apply(console, args);
+  logBuffer.push(args.join(' '));
+};
+
+function sendLogsToServer() {
+  fetch('/', {
+    method: 'POST',
+    body: logBuffer.join('\n')
+  }).catch(err => originalLog('Failed to send logs to server:', err));
+}
+
 let scene, camera, renderer, controls;
 let raycaster, _mouse;
 let modelLoaded = false;
@@ -88,8 +102,9 @@ function loadRamenShop() {
   loader.setDRACOLoader(dracoLoader);
   const texLoad = new THREE.TextureLoader();
 
+  const cacheBuster = Date.now();
   function tex(file) {
-    const t = texLoad.load('assets/textures/baked/' + file);
+    const t = texLoad.load('assets/textures/baked/' + file + '?v=' + cacheBuster);
     t.flipY    = false;
     t.encoding = THREE.sRGBEncoding;
     return t;
@@ -118,7 +133,7 @@ function loadRamenShop() {
   };
 
   loader.load(
-    'assets/models/ramenShop/glTF/ramenShop.gltf',
+    'assets/models/ramenShop/glTF/ramenShop.gltf?v=' + cacheBuster,
     (gltf) => {
       const model = gltf.scene;
       model.position.y = -3;
@@ -126,19 +141,26 @@ function loadRamenShop() {
       model.traverse((child) => {
         const n = child.name;
 
-        // Hide original text meshes (including groups) to replace with custom text
-        if (n && (
-            n.includes('projectsRed') || n.includes('projectsWhite') ||
-            n.includes('articlesRed') || n.includes('articlesWhite') ||
-            n.includes('aboutMeBlack') || n.includes('aboutMeBlue') ||
-            n.includes('creditsBlack') || n.includes('creditsOrange') ||
-            n.includes('jZhouBlack') || n.includes('jZhouPink') ||
-            n.includes('jesseZhouJoined')
-        )) {
+        // === MAIN SIGN: hide "Jesse's Ramen" 3D text geometry and glows entirely ===
+        if (n && (n.toLowerCase().includes('jesse') || n.toLowerCase().includes('jzhou') || n.toLowerCase().includes('zhou'))) {
+          console.log('[3D Meshes] HIDING Jesse Zhou object:', n);
           child.visible = false;
+          return;
         }
 
         if (!child.isMesh) return;
+        
+        // Compute world bounding box for spatial search of the roof sign
+        child.geometry.computeBoundingBox();
+        const bbox = child.geometry.boundingBox.clone();
+        child.updateMatrixWorld(true);
+        bbox.applyMatrix4(child.matrixWorld);
+        const center = new THREE.Vector3();
+        bbox.getCenter(center);
+        
+        console.log('[DEBUG CENTER]: name =', n, 'center =', center.x.toFixed(2), center.y.toFixed(2), center.z.toFixed(2));
+
+        console.log('[DEBUG SCENE MESH]: name =', n, 'material =', child.material ? child.material.type : 'none', 'visible =', child.visible);
 
         // Baked groups
         if      (n === 'ramenShopJoined') child.material = baked.ramenShop;
@@ -148,6 +170,11 @@ function loadRamenShop() {
         else if (n === 'graphicsJoined')  child.material = baked.graphics;
 
         // Sign colours
+        else if (n === 'projectsRed'  || n === 'articlesRed')   child.material = flat.red;
+        else if (n === 'projectsWhite'|| n === 'articlesWhite') child.material = flat.white;
+        else if (n === 'aboutMeBlack' || n === 'creditsBlack') child.material = flat.black;
+        else if (n === 'aboutMeBlue'  || n === 'blueLights')    child.material = flat.blue;
+        else if (n === 'creditsOrange'|| n === 'yellowRightLight') child.material = flat.orange;
         else if (n === 'greenSignSquare')   child.material = flat.green;
         else if (n === 'whiteButton')       child.material = flat.white;
         else if (n === 'redLED')            child.material = flat.redLed;
@@ -165,13 +192,10 @@ function loadRamenShop() {
       });
 
       scene.add(model);
-
-      document.fonts.ready.then(() => {
-        createCustomSigns();
-      });
-
+      buildSignHitBoxes();
       modelLoaded = true;
       console.log('[3D] ramenShop.gltf loaded ✓');
+      sendLogsToServer();
     },
     (xhr) => {
       if (xhr.total > 0) {
@@ -185,8 +209,28 @@ function loadRamenShop() {
   );
 }
 
+
+/* --------------------------------------------------------------------------
+   INVISIBLE SIGN HITBOXES — exact positions from RayCaster.js
+   -------------------------------------------------------------------------- */
 function buildSignHitBoxes() {
-  // Hitboxes are built dynamically in createCustomSigns()
+  const invisible = new THREE.MeshBasicMaterial({ visible: false });
+
+  [
+    { key: 'projects',  size: [0.4, 0.6,  1.7], pos: [-4,  0.4,   -5.0]  },
+    { key: 'education', size: [0.4, 1.0,  1.0], pos: [-4, -0.4,  -4.72]  },
+    { key: 'aboutme',   size: [0.4, 0.43, 1.7], pos: [-4, -1.83, -5.1]   },
+    { key: 'credits',   size: [0.4, 0.4,  1.4], pos: [-4, -2.3,  -5.03]  },
+  ].forEach(s => {
+    const mesh = new THREE.Mesh(
+      new THREE.BoxGeometry(...s.size),
+      invisible.clone()
+    );
+    mesh.position.set(...s.pos);
+    mesh.userData.sectionKey = s.key;
+    scene.add(mesh);
+    signHitBoxes.push(mesh);
+  });
 }
 
 /* --------------------------------------------------------------------------
@@ -276,77 +320,13 @@ function animate() {
   if (renderer && scene && camera) renderer.render(scene, camera);
 }
 
-/* --------------------------------------------------------------------------
-   DYNAMIC RETRO NEON SIGNS (Planes with CanvasTexture)
-   -------------------------------------------------------------------------- */
-function createCustomSigns() {
-  const signs = [
-    { key: "projects",  text: "PROJECTS",  pos: [-4.12,  0.4,  -5.0],  size: [1.7, 0.6],  textColor: "#ffffff", glowColor: "#ff0033" },
-    { key: "pranavs",   text: "PRANAV'S",  pos: [-4.12, -0.4,  -4.72], size: [1.0, 1.0],  textColor: "#ffffff", glowColor: "#ff3dcb" },
-    { key: "skills",    text: "SKILLS",    pos: [-4.12, -1.25, -5.0],  size: [1.5, 0.45], textColor: "#ffffff", glowColor: "#ff0033" },
-    { key: "education", text: "EDUCATION", pos: [-4.12, -1.83, -5.1],  size: [1.7, 0.43], textColor: "#ffffff", glowColor: "#01ddff" },
-    { key: "aboutme",   text: "ABOUT ME",  pos: [-4.12, -2.3,  -5.03], size: [1.4, 0.4],  textColor: "#ffffff", glowColor: "#ff5100" },
-    { key: "roof",      text: "PRANAV'S RAMEN", pos: [-4.75, 0.72, -1.8], size: [2.5, 0.7], textColor: "#ffffff", glowColor: "#ff3dcb", isRoof: true }
-  ];
-
-  // Clear any existing hitboxes to prevent duplicates
-  signHitBoxes = [];
-
-  signs.forEach(s => {
-    const w = s.isRoof ? 1024 : 512;
-    const h = s.isRoof ? 256 : 128;
-    const texture = createTextTexture(s.text, s.textColor, s.glowColor, w, h, s.isRoof);
-    
-    const mat = new THREE.MeshBasicMaterial({
-      map: texture,
-      transparent: true,
-      side: THREE.DoubleSide
+// Monitor scene graph for unexpected visible meshes
+setInterval(() => {
+  if (scene) {
+    scene.traverse(node => {
+      if (node.isMesh && node.visible && (node.name.toLowerCase().includes('jesse') || node.name.toLowerCase().includes('zhou'))) {
+        console.log('[MONITOR] Unexpected visible mesh found in active scene:', node.name, 'parent:', node.parent ? node.parent.name : 'none');
+      }
     });
-    
-    const geo = new THREE.PlaneGeometry(s.size[0], s.size[1]);
-    const mesh = new THREE.Mesh(geo, mat);
-    mesh.position.set(...s.pos);
-    mesh.rotation.y = -Math.PI / 2;
-    mesh.userData.sectionKey = s.key;
-    scene.add(mesh);
-    
-    // Add to interactive raycasting array if it's a post sign
-    if (!s.isRoof) {
-      signHitBoxes.push(mesh);
-    }
-  });
-}
-
-function createTextTexture(text, textColor, glowColor, width = 512, height = 128, isRoof = false) {
-  const canvas = document.createElement('canvas');
-  canvas.width = width;
-  canvas.height = height;
-  const ctx = canvas.getContext('2d');
-  
-  if (isRoof) {
-    // Solid background to block the underlying original neon text
-    ctx.fillStyle = "#0c0d14";
-    ctx.fillRect(0, 0, width, height);
-  } else {
-    ctx.clearRect(0, 0, width, height);
   }
-  
-  // Retro Pixel Font
-  ctx.font = isRoof ? 'bold 50px "Press Start 2P", Courier, monospace' : 'bold 44px "Press Start 2P", Courier, monospace';
-  ctx.fillStyle = textColor;
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  
-  // Neon glow effect
-  ctx.shadowColor = glowColor;
-  ctx.shadowBlur = 15;
-  ctx.shadowOffsetX = 0;
-  ctx.shadowOffsetY = 0;
-  
-  ctx.fillText(text.toUpperCase(), width / 2, height / 2);
-  
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.minFilter = THREE.LinearFilter;
-  texture.magFilter = THREE.LinearFilter;
-  return texture;
-}
+}, 1000);
