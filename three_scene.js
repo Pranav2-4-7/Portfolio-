@@ -4,19 +4,6 @@
    Camera positions ported directly from original Camera.js.
    ========================================================================== */
 
-const originalLog = console.log;
-const logBuffer = [];
-console.log = function(...args) {
-  originalLog.apply(console, args);
-  logBuffer.push(args.join(' '));
-};
-
-function sendLogsToServer() {
-  fetch('/', {
-    method: 'POST',
-    body: logBuffer.join('\n')
-  }).catch(err => originalLog('Failed to send logs to server:', err));
-}
 
 let scene, camera, renderer, controls;
 let raycaster, _mouse;
@@ -195,7 +182,6 @@ function loadRamenShop() {
       buildSignHitBoxes();
       modelLoaded = true;
       console.log('[3D] ramenShop.gltf loaded ✓');
-      sendLogsToServer();
     },
     (xhr) => {
       if (xhr.total > 0) {
